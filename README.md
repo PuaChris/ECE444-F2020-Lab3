@@ -1,24 +1,38 @@
-this repo is a clone of https://github.com/miguelgrinberg/flasky
+# Build and Start Instructions
+1. Create a `requirements.txt` file inside the repo.
+2. Type in `pip freeze` in your Python virtual environment to view all of the dependencies. Copy them into `requirements.txt`. Can also type the following to copy the dependencies into the file directly: 
+```
+pip freeze >> requirements.txt  
+```
+3. Create a new `Dockerfile` and copy the following inside ('xxx' represents the file name to run after starting docker):
+```
+FROM python:3.7	
+COPY . /app	
+WORKDIR /app	
+RUN pip install -r requirements.txt	
+ENTRYPOINT ["python3"]	
+CMD ["xxx"]
+```
+- So on start, docker will run: `python3 xxx` on its CLI.
 
-# Activity 1
+4. To build, type the following: `docker build -t lab3 .`
+5. To run, type the following: `docker run -it --name lab3 --rm -p 5000:5000 lab3` 
 
-![timestamp](/screenshots/timestamp.jpg)
 
-# Activity 2
 
-![stranger with email](/screenshots/stranger-with-email-form.jpg)
+# Screenshots
+![docker run](/screenshots/docker-run.jpg)
 
-![name with uoft email](/screenshots/name-with-uoft-email.jpg)
+![lab4&5 title](/screenshots/lab4&5-title.jpg)
 
-![invalid email](screenshots/invalid-email.jpg)
+![docker image ls](/screenshots/docker-image-ls.jpg)
 
-![non-uoft-email](screenshots/non-uoft-email.jpg)
+# Docker vs. Virtual Machine
 
-# Activity 3
-
-| SQL | NoSQL |
+| Docker | Virtual Machine |
 |-----|-------|
-|Tables have fixed rows and columns|Contains Documents which are JSON objects, key-value pairs, graphs, and more|
-|Schemas are rigid in the sense that they are relational|Schemas are flexible because they are non-relational
-|Scales vertically -> larger/more powerful servers|Scales horizontally -> spread out across a number of servers|
-|Better for multi-row transactions|Better for unstructured data for flexibility|
+|Lightweight|Heavyweight|
+|All containers share the same host OS|Each VM runs in its own OS|
+|OS virtualization|Hardware-level virtualization|
+|Process-level isolation|Fully isolated|
+|Fast startup|Slow startup|
